@@ -141,6 +141,18 @@
     .mobile-nav { display:none; }
     @media(max-width:992px){ nav .brand-logo{left:50%;transform:translateX(-50%);} .desktop-nav{display:none;} .mobile-nav{display:block;} .hero h1{font-size:2.7rem;} }
     @media(max-width:600px){ .section{padding:48px 0;} .hero{padding:64px 0 48px;} .hero h1{font-size:2.25rem;} h2{font-size:1.9rem;} }
+
+    /* Browser-native mobile menu; no Materialize initialization required. */
+    .menu-toggle { border:0; background:transparent; color:var(--ink); cursor:pointer; height:56px; min-width:48px; align-items:center; justify-content:center; padding:0; }
+    .mobile-menu { display:none; position:fixed; top:56px; left:0; right:0; width:100%; margin:0; padding:8px 16px 16px; list-style:none; background:white; box-shadow:0 8px 18px rgba(0,0,0,.16); z-index:9999; }
+    .mobile-menu[hidden] { display:none!important; }
+    .mobile-menu.open { display:block; }
+    .mobile-menu li { float:none; }
+    .mobile-menu a { display:block; color:var(--ink); font-size:1rem; padding:12px 16px; height:auto; line-height:1.4; border-radius:5px; }
+    .mobile-menu a.active { color:var(--accent-dark); background:#e1f5fe; }
+    @media(max-width:992px){ .mobile-nav.menu-toggle { display:flex; } nav .brand-logo { white-space:nowrap; font-size:1.25rem; } }
+    @media(min-width:993px){ .mobile-menu,.mobile-nav.menu-toggle { display:none!important; } }
+    @media(max-width:600px){ .hero .row.valign-wrapper { display:block; } .hero .btn-large { margin-bottom:10px; } .publication-card .btn { height:auto; line-height:1.5; padding-top:10px; padding-bottom:10px; } }
   </style>
 </head>
 <body>
@@ -149,25 +161,25 @@
   <div class="navbar-fixed">
     <nav aria-label="Main navigation">
       <div class="nav-wrapper container">
-        <a href="#" class="brand-logo" onclick="showPage('home');return false;">StoryWeave</a>
-        <a href="#" data-target="mobile-menu" class="sidenav-trigger mobile-nav"><i class="material-icons">menu</i></a>
+        <a href="#" class="brand-logo">StoryWeave</a>
+        <button type="button" id="menu-toggle" class="mobile-nav menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu"><i class="material-icons" aria-hidden="true">menu</i></button>
         <ul class="right desktop-nav">
-          <li><a data-page="home" onclick="showPage('home')">Overview</a></li>
-          <li><a data-page="research" onclick="showPage('research')">Our Research</a></li>
-          <li><a data-page="validation" onclick="showPage('validation')">Validation</a></li>
-          <li><a data-page="team" onclick="showPage('team')">Team &amp; Dataset</a></li>
-          <li><a class="waves-effect waves-light btn light-blue" data-page="contact" onclick="showPage('contact')">Request Access</a></li>
+          <li><a data-page="home" href="#home">Overview</a></li>
+          <li><a data-page="research" href="#research" data-page="research">Our Research</a></li>
+          <li><a data-page="validation" href="#validation" data-page="validation">Validation</a></li>
+          <li><a data-page="team" href="#team" data-page="team">Team &amp; Dataset</a></li>
+          <li><a class="waves-effect waves-light btn light-blue" data-page="contact" href="#contact" data-page="contact">Request Access</a></li>
         </ul>
       </div>
     </nav>
   </div>
 
-  <ul class="sidenav" id="mobile-menu">
-    <li><a onclick="showPage('home')">Overview</a></li>
-    <li><a onclick="showPage('research')">Our Research</a></li>
-    <li><a onclick="showPage('validation')">Validation</a></li>
-    <li><a onclick="showPage('team')">Team &amp; Dataset</a></li>
-    <li><a onclick="showPage('contact')">Request Access</a></li>
+  <ul class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" hidden>
+    <li><a href="#home" data-page="home">Overview</a></li>
+    <li><a href="#research" data-page="research">Our Research</a></li>
+    <li><a href="#validation" data-page="validation">Validation</a></li>
+    <li><a href="#team" data-page="team">Team &amp; Dataset</a></li>
+    <li><a href="#contact" data-page="contact">Request Access</a></li>
   </ul>
 
   <main id="main">
@@ -180,8 +192,8 @@
               <h1>Making picture-book stories fully accessible.</h1>
               <p>StoryWeave is a narrative-aware AI system that preserves characters, plot flow, and emotional context across picture-book pages for blind and low-vision readers.</p>
               <div style="margin-top:30px">
-                <a class="waves-effect waves-light btn-large light-blue" onclick="showPage('validation')"><i class="material-icons left">assessment</i>Validation Results</a>
-                <a class="waves-effect btn-flat" onclick="showPage('research')">Read Our Research</a>
+                <a class="waves-effect waves-light btn-large light-blue" href="#validation" data-page="validation"><i class="material-icons left">assessment</i>Validation Results</a>
+                <a class="waves-effect btn-flat" href="#research" data-page="research">Read Our Research</a>
               </div>
             </div>
             <div class="col s12 l5">
@@ -194,6 +206,14 @@
                   <span class="light-blue-text text-darken-2">Continuity memory active</span>
                 </div>
               </div>
+          <div class="card publication-card" style="margin-top:30px">
+            <div class="card-content">
+              <p class="eyebrow">Research publication</p>
+              <span class="card-title">Multimodal Artificial Intelligence for Accessible Picture-Book Narration</span>
+              <p>Accepted to the <strong>International Symposium of Computer Science and Educational Technology (ISCSET) 2026</strong>. Publication on <strong>IEEE Xplore is pending</strong>.</p>
+              <p style="margin-top:16px"><a class="btn light-blue" href="./paper.pdf" target="_blank" rel="noopener" type="application/pdf"><i class="material-icons left" aria-hidden="true">picture_as_pdf</i>Read the paper (PDF)</a></p>
+            </div>
+          </div>
             </div>
           </div>
         </div>
@@ -202,10 +222,10 @@
       <div class="section">
         <div class="container">
           <div class="row center-align">
-            <div class="col s6 m3"><p class="metric">300+</p><p class="metric-label">Annotated pages</p></div>
-            <div class="col s6 m3"><p class="metric">8.4%</p><p class="metric-label">Unsupported claim rate</p></div>
-            <div class="col s6 m3"><p class="metric">86%</p><p class="metric-label">Comprehension score</p></div>
-            <div class="col s6 m3"><p class="metric">5.1%</p><p class="metric-label">Plot continuity error rate</p></div>
+            <div class="col s6 m3"><p class="metric">61</p><p class="metric-label">Pages in automated evaluation</p></div>
+            <div class="col s6 m3"><p class="metric">76.6%</p><p class="metric-label">Enriched preference (all votes)</p></div>
+            <div class="col s6 m3"><p class="metric">87.7%</p><p class="metric-label">Enriched preference (sided votes)</p></div>
+            <div class="col s6 m3"><p class="metric">16</p><p class="metric-label">Adult participants</p></div>
           </div>
         </div>
       </div>
@@ -231,6 +251,7 @@
             <div class="col s12 m6"><div class="card comparison-before"><div class="card-content"><span class="card-title">Standard AI</span><p>“A child and a dog in snow. Trees in the background.”</p></div></div></div>
             <div class="col s12 m6"><div class="card comparison-after"><div class="card-content"><span class="card-title">StoryWeave</span><p>“The same child from page 1 continues searching the snowy forest, still carrying the blue lantern she found earlier. Her dog, missing since page 3, has not yet reappeared.”</p></div></div></div>
           </div>
+
         </div>
       </div>
     </section>
@@ -241,7 +262,7 @@
           <p class="eyebrow">Our Research</p>
           <h2>Multimodal AI for accessible picture-book narration</h2>
           <p class="lead">Our research treats picture-book accessibility as a narrative-integration problem: preserve the author's original text while adding concise, grounded visual information that helps blind and low-vision readers understand illustrations, character actions, emotion cues, and story continuity.</p>
-          <div class="recognition"><strong>Peer-reviewed recognition:</strong> Our research was accepted to and presented at the International Symposium of Computer Science and Educational Technology (ISCSET) 2026.</div>
+          <div class="recognition"><strong>Peer-reviewed recognition:</strong> The paper was accepted to and presented at the International Symposium of Computer Science and Educational Technology (ISCSET) 2026. Publication on IEEE Xplore is pending. <a href="./paper.pdf" target="_blank" rel="noopener">Read the paper (PDF)</a>.</div>
         </div>
       </div>
 
@@ -282,12 +303,12 @@
 
         <div class="row">
           <div class="col s12 m6"><div class="card"><div class="card-content"><span class="card-title">Preference by dimension</span><p><strong>Better descriptions:</strong> 94.2%</p><p><strong>Recommend for readers:</strong> 92.7%</p><p><strong>More enjoyable:</strong> 86.6%</p><p><strong>Easier to remember:</strong> 76.0%</p><p>The enriched version was preferred across all eight excerpts and all four questions.</p></div></div></div>
-          <div class="col s12 m6"><div class="card"><div class="card-content"><span class="card-title">Automated quality results</span><p><strong>Original Text Preservation Rate:</strong> 1.00</p><p><strong>Dialogue Preservation Rate:</strong> 1.00</p><p><strong>Human-verified unsupported claims:</strong> 0.0%</p><p><strong>Human-verified continuity errors:</strong> 0.0%</p><p>The mean word expansion ratio was 1.36 across the 61 evaluated pages.</p></div></div></div>
+          <div class="col s12 m6"><div class="card"><div class="card-content"><span class="card-title">Automated quality results</span><p><strong>Original Text Preservation Rate:</strong> 1.00</p><p><strong>Dialogue Preservation Rate:</strong> 1.00</p><p><strong>Human-verified unsupported claims:</strong> 0.0%</p><p><strong>Human-verified continuity errors:</strong> 0.0%</p><p>The mean word expansion ratio was 1.36 across the 61 evaluated pages. Automated screening flagged 0.3% unsupported claims and 5.0% continuity errors overall; manual review found no genuine violations in this sample.</p></div></div></div>
         </div>
 
-        <div class="card"><div class="card-content"><span class="card-title">Study design</span><div class="row"><div class="col s12 m4"><strong>Participants</strong><p>Sixteen adults who self-reported visual impairment: five blind from birth, six with acquired blindness, and five with low vision.</p></div><div class="col s12 m4"><strong>Materials</strong><p>Eight excerpts from three books, evaluated on description quality, enjoyment, memorability, and willingness to recommend.</p></div><div class="col s12 m4"><strong>Accessibility and oversight</strong><p>The final survey was accessibility-corrected and counterbalanced. Vista Center reviewed and approved the study under its organizational research guidelines.</p></div></div></div></div>
+        <div class="card"><div class="card-content"><span class="card-title">Study design</span><div class="row"><div class="col s12 m4"><strong>Participants</strong><p>Sixteen adults who self-reported visual impairment: five blind from birth, six with acquired blindness, and five with low vision.</p></div><div class="col s12 m4"><strong>Materials</strong><p>Eight excerpts from three books, evaluated on description quality, enjoyment, memorability, and willingness to recommend.</p></div><div class="col s12 m4"><strong>Accessibility and oversight</strong><p>The final survey was accessibility-corrected and counterbalanced after excluding three pilot responses. Vista Center reviewed and approved the study under its organizational research guidelines.</p></div></div></div></div>
 
-        <div class="card"><div class="card-content"><span class="card-title">How to interpret the findings</span><p>The results provide evidence of feasibility and preference, not population-level effectiveness. The sample was small, all participants were adults, and the study measured preference rather than controlled comprehension. Evaluation with children, larger samples, independent human review, broader book formats, and comparisons with captioning, alt text, and human-authored descriptions remain future work.</p></div></div>
+        <div class="card"><div class="card-content"><span class="card-title">How to interpret the findings</span><p>The results provide evidence of feasibility and preference, not population-level effectiveness. The sample was small, all participants were adults, and the study measured preference rather than controlled comprehension. Automated screening results were manually checked by the researchers; independent human evaluation remains future work. Evaluation with children, larger samples, independent human review, broader book formats, and comparisons with captioning, alt text, and human-authored descriptions remain future work.</p></div></div>
       </div></div>
     </section>
 
@@ -296,13 +317,20 @@
       <div class="section"><div class="container">
         <h2>Research team</h2>
         <div class="row">
-          <div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Aarush Jain</span><p class="light-blue-text text-darken-2">Lead researcher · System architecture · Evaluation</p><p>Designed and implemented the narrative-aware system, developed the evaluation methodology, and led the research study.</p></div></div></div>
-          <div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Gayatri Bhimaraju</span><p class="light-blue-text text-darken-2">Co-researcher · Dataset · Annotation</p><p>Applied accessibility guidelines to help create the gold-standard narration dataset and co-designed the experimental evaluation framework.</p></div></div></div>
+          <div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Aarush Jain</span><p class="light-blue-text text-darken-2">Co-first author · System architecture · Evaluation</p><p>Co-authored the research paper on multimodal, narrative-aware accessible picture-book narration and its evaluation.</p></div></div></div>
+          <div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Gayatri Bhimaraju</span><p class="light-blue-text text-darken-2">Co-first author · Research collaboration</p><p>Co-authored the research paper. Both authors are designated co-first authors in the manuscript.</p></div></div></div>
           <div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Vista Center for the Blind and Visually Impaired</span><p class="light-blue-text text-darken-2">Accessibility partner · Participant engagement</p><p>Supported engagement with blind and low-vision participants and provided accessibility-focused input for the research evaluation.</p></div></div></div>
         </div>
-        <h2 style="margin-top:50px">Dataset structure</h2>
-        <div class="table-wrap"><table class="striped responsive-table"><thead><tr><th>Tier</th><th>Pages</th><th>Purpose</th></tr></thead><tbody><tr><td>Core</td><td>300</td><td>Primary benchmark and evaluation</td></tr><tr><td>Extended</td><td>500</td><td>Broader illustration and narrative diversity</td></tr><tr><td>Large</td><td>800</td><td>Future scaling and external research use</td></tr></tbody></table></div>
-        <div class="row" style="margin-top:30px"><div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Sources</span><p>Bloom Library, African Storybook, and Free Kids Books.</p></div></div></div><div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Annotation</span><p>Literal content, story function, and cross-page continuity.</p></div></div></div><div class="col s12 m4"><div class="card"><div class="card-content"><span class="card-title">Use</span><p>Academic and accessibility research subject to request review.</p></div></div></div></div>
+        <h2 style="margin-top:50px">Evaluation data reported in the paper</h2>
+        <p>The published study reports a <strong>61-page automated evaluation across four books</strong>, plus <strong>eight reader-study excerpts from three books</strong>. The paper does not establish a public 300-, 500-, or 800-page annotated dataset.</p>
+        <div class="table-wrap"><table class="striped"><thead><tr><th>Automated evaluation book</th><th>Pages</th></tr></thead><tbody>
+          <tr><td>Terrance Turtle’s New Home</td><td>12</td></tr>
+          <tr><td>The Naughty Monkey</td><td>19</td></tr>
+          <tr><td>Captain Fantastic</td><td>10</td></tr>
+          <tr><td>Homework Yuck</td><td>20</td></tr>
+          <tr><th>Total</th><th>61</th></tr>
+        </tbody></table></div>
+        <p>Reader preference study: 16 adult blind and low-vision participants, 8 excerpts, 4 questions per excerpt, and 512 judgments. Contact the team to inquire about research materials and availability.</p>
       </div></div>
     </section>
 
@@ -330,20 +358,32 @@
     </section>
   </main>
 
-  <footer class="footer"><div class="container"><div class="row" style="margin-bottom:0"><div class="col s12 m8"><strong>StoryWeave</strong><br><span>Accessible picture-book narration research</span></div><div class="col s12 m4 right-align"><a href="#" onclick="showPage('research');return false;">Our Research</a> &nbsp;·&nbsp; <a href="#" onclick="showPage('contact');return false;">Request Access</a></div></div></div></footer>
+  <footer class="footer"><div class="container"><div class="row" style="margin-bottom:0"><div class="col s12 m8"><strong>StoryWeave</strong><br><span>Accessible picture-book narration research</span></div><div class="col s12 m4 right-align"><a href="#research">Our Research</a> &nbsp;·&nbsp; <a href="#contact">Request Access</a></div></div></div></footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
-    function showPage(id){
-      document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+id));
-      document.querySelectorAll('[data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===id));
-      window.scrollTo({top:0,behavior:'smooth'});
-      if(window.M){ const side=M.Sidenav.getInstance(document.getElementById('mobile-menu')); if(side) side.close(); }
-    }
-    document.addEventListener('DOMContentLoaded',function(){
-      if(window.M) M.Sidenav.init(document.querySelectorAll('.sidenav'));
-      showPage('home');
-    });
+    (function(){
+      const pages = ['home','research','validation','team','contact'];
+      const menu = document.getElementById('mobile-menu');
+      const toggle = document.getElementById('menu-toggle');
+      function closeMenu(){ menu.hidden=true; menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open navigation menu'); }
+      function showPage(id){
+        if(!pages.includes(id)) id='home';
+        document.querySelectorAll('.page').forEach(p=>{ const active=p.id==='page-'+id; p.classList.toggle('active',active); p.hidden=!active; });
+        document.querySelectorAll('[data-page]').forEach(a=>{ a.classList.toggle('active',a.dataset.page===id); if(a.dataset.page===id) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+        closeMenu();
+        window.scrollTo(0,0);
+      }
+      window.showPage=showPage;
+      toggle.addEventListener('click',()=>{ const opening=menu.hidden; menu.hidden=!opening; menu.classList.toggle('open',opening); toggle.setAttribute('aria-expanded',String(opening)); toggle.setAttribute('aria-label',opening?'Close navigation menu':'Open navigation menu'); });
+      document.addEventListener('click',e=>{
+        const link=e.target.closest('a[href^="#"]');
+        if(link){ const id=link.getAttribute('href').slice(1); if(pages.includes(id)){ e.preventDefault(); if(location.hash!=='#'+id) history.pushState(null,'','#'+id); showPage(id); } }
+        if(!menu.hidden && !e.target.closest('#mobile-menu') && !e.target.closest('#menu-toggle'))closeMenu();
+      });
+      window.addEventListener('hashchange',()=>showPage(location.hash.slice(1)));
+      document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+      showPage(location.hash.slice(1));
+    })();
   </script>
 </body>
 </html>
